@@ -31,7 +31,7 @@ app.prepare().then(() => {
     return handle(req, res)
   })
 
-  server.listen(3004, (err) => {
+  server.listen(9001, (err) => {
     if (err) throw err
     console.log('Server ready on http://localhost:9001')
   })
