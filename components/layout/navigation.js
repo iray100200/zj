@@ -40,7 +40,7 @@ const navs = (userType) => [
   }, {
     key: 7,
     text: '举报检测',
-    hidden: userType === 'admin',
+    hidden: !userType || userType === 'admin',
     children: [
       {
         text: '假冒投诉',
@@ -73,7 +73,7 @@ export default {
           <CacheConsumer>
             {
               data => {
-                return navs(data.authtype).filter(obj => !obj.hidden).map((obj) => {
+                return navs(data.authtype, data.token).filter(obj => !obj.hidden).map((obj) => {
                   return <li key={obj.key} className={obj.key == activeIndex ? 'first active' : ''}>
                     <a href={obj.link} style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }} className="navItem">
                       {obj.icon}&nbsp;&nbsp;{obj.text}

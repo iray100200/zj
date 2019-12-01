@@ -108,6 +108,8 @@ const Complaint = (props) => {
                 >
                   <TextField
                     fullWidth
+                    multiline
+                    rows={2}
                     label="被举报方产品描述"
                     onChange={handleChange}
                     required

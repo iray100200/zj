@@ -10,6 +10,11 @@ import FilesDropzone from '../../components/filesDropzone'
 import Typography from '@material-ui/core/Typography'
 import { CacheConsumer } from '../../components/providers'
 import Button from '@material-ui/core/Button'
+import FormControl from '@material-ui/core/FormControl'
+import InputLabel from '@material-ui/core/InputLabel'
+import FormHelperText from '@material-ui/core/FormHelperText'
+import Select from '@material-ui/core/Select'
+import MenuItem from '@material-ui/core/MenuItem'
 
 const Complaint = (props) => {
   const handleChange = () => {
@@ -31,7 +36,23 @@ const Complaint = (props) => {
               >
                 <Grid
                   item
-                  xs={6}
+                  xs={4}
+                >
+                  <FormControl fullWidth variant="outlined">
+                    <InputLabel style={{ display: 'inline-block', padding: '0 6px', background: '#fff' }}>
+                      投诉类型 *
+                    </InputLabel>
+                    <Select fullWidth>
+                      <MenuItem value={1}>发明专利</MenuItem>
+                      <MenuItem value={2}>实用新型</MenuItem>
+                      <MenuItem value={3}>外观设计</MenuItem>
+                    </Select>
+                    <FormHelperText>选择投诉类型</FormHelperText>
+                  </FormControl>
+                </Grid>
+                <Grid
+                  item
+                  xs={4}
                 >
                   <TextField
                     fullWidth
@@ -43,7 +64,7 @@ const Complaint = (props) => {
                 </Grid>
                 <Grid
                   item
-                  xs={6}
+                  xs={4}
                 >
                   <TextField
                     fullWidth
@@ -59,6 +80,8 @@ const Complaint = (props) => {
                 >
                   <TextField
                     fullWidth
+                    multiline
+                    rows={2}
                     label="被举报方产品描述"
                     onChange={handleChange}
                     required
