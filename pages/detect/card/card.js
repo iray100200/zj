@@ -72,7 +72,7 @@ const ProjectCard = props => {
         <div className={classes.header}>
           <img src={project.buy_pic} width={80} height={80} style={{ minWidth: 80, marginRight: 20 }} />
           <div>
-            <strong>{project.patent_title}</strong>
+            <strong dangerouslySetInnerHTML={{ __html: project.patent_title }}></strong>
             <Typography style={{ marginTop: 8 }} variant="body2">
               <span dangerouslySetInnerHTML={{ __html: project.buy_content }}></span>
             </Typography>
