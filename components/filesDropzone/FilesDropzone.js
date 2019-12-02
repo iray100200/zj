@@ -17,6 +17,7 @@ import {
 } from '@material-ui/core'
 import FileCopyIcon from '@material-ui/icons/FileCopy'
 import bytesToSize from './bytesToSize'
+import fetch from 'isomorphic-unfetch'
 
 const useStyles = makeStyles(theme => ({
   root: {},
@@ -60,7 +61,6 @@ const useStyles = makeStyles(theme => ({
 
 const FilesDropzone = props => {
   const { className, title, ...rest } = props
-
   const classes = useStyles()
 
   const [files, setFiles] = useState([])
@@ -70,12 +70,36 @@ const FilesDropzone = props => {
   }, [])
 
   const handleRemoveAll = () => {
+    savedFiles.length = 0
     setFiles([])
+  }
+
+  const upload = (data) => {
+    return fetch(`http://47.96.129.81:8081/f/v1/picture`, {
+      method: 'post',
+      body: data
+    })
   }
 
   const { getRootProps, getInputProps, isDragActive } = useDropzone({
     onDrop: handleDrop
   })
+
+  const handleUpload = () => {
+    const filePaths = []
+    files.forEach((file) => {
+      const reader = new FileReader()
+      reader.onload = async () => {
+        const formData = new FormData()
+        const binary = new Blob([reader.result])
+        formData.append('file', binary)
+        const res = await upload(formData)
+        const result = await res.json()
+        filePaths.push(result.body)
+      }
+      reader.readAsArrayBuffer(file)
+    })
+  }
 
   return (
     <div
@@ -141,6 +165,13 @@ const FilesDropzone = props => {
               size="small"
             >
               全部移除
+            </Button>
+            <Button
+              onClick={handleUpload}
+              variant="outlined"
+              color="primary"
+              size="small">
+              上传
             </Button>
           </div>
         </Fragment>

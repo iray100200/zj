@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import Layout from '../../components/layout'
 import Navigator from '../../components/navigator'
 import Card from '@material-ui/core/Card'
@@ -15,10 +15,40 @@ import InputLabel from '@material-ui/core/InputLabel'
 import FormHelperText from '@material-ui/core/FormHelperText'
 import Select from '@material-ui/core/Select'
 import MenuItem from '@material-ui/core/MenuItem'
+import fetch from 'isomorphic-unfetch'
+import querystring from 'query-string'
 
 const Complaint = (props) => {
-  const handleChange = () => {
+  const [informer, setInformer] = useState('')
+  const [token, setToken] = useState('')
+  const [patentType, setPatentType] = useState(1)
+  const [reportedPatentNumber, setReportedPatentNumber] = useState('')
+  const [reportedProductName, setReportedProductName] = useState('')
+  const [reportedProductDesc, setReportedProductDesc] = useState('')
+  const [informerContact, setInformerContact] = useState('')
+  const handleSubmit = async () => {
+    const params = {
+      investigatorPatentNumber: '',
+      investigatorProductName: '',
+      investigatorProductDesc: '',
+      investigatorImagePath: '',
+      complaintType: 1,
+      patentType,
+      reportedPatentNumber,
+      reportedProductName,
+      reportedProductDesc,
+      informer,
+      reportedImagePath: '',
+      informerContact,
+      token
+    }
+    const res = await fetch(`http://47.96.129.81:8081/f/v1/rightsProtection?${querystring.stringify(params)}`, {
+      method: 'post'
+    })
+    const result = await res.json()
+    if (result.code === 0) {
 
+    }
   }
   return (
     <Layout activeIndex={7}>
@@ -42,10 +72,10 @@ const Complaint = (props) => {
                     <InputLabel style={{ display: 'inline-block', padding: '0 6px', background: '#fff' }}>
                       投诉类型 *
                     </InputLabel>
-                    <Select fullWidth>
-                      <MenuItem value={1}>发明专利</MenuItem>
-                      <MenuItem value={2}>实用新型</MenuItem>
-                      <MenuItem value={3}>外观设计</MenuItem>
+                    <Select value={patentType} onChange={e => setPatentType(e.target.value)} fullWidth>
+                      <MenuItem value={6}>发明专利</MenuItem>
+                      <MenuItem value={4}>实用新型</MenuItem>
+                      <MenuItem value={2}>外观设计</MenuItem>
                     </Select>
                     <FormHelperText>选择投诉类型</FormHelperText>
                   </FormControl>
@@ -55,9 +85,10 @@ const Complaint = (props) => {
                   xs={4}
                 >
                   <TextField
+                    value={reportedPatentNumber}
                     fullWidth
                     label="被举报专利号"
-                    onChange={handleChange}
+                    onChange={e => setReportedPatentNumber(e.target.value)}
                     required
                     variant="outlined"
                   />
@@ -67,9 +98,10 @@ const Complaint = (props) => {
                   xs={4}
                 >
                   <TextField
+                    value={reportedProductName}
                     fullWidth
                     label="被举报方产品名称"
-                    onChange={handleChange}
+                    onChange={e => setReportedProductName(e.target.value)}
                     required
                     variant="outlined"
                   />
@@ -79,11 +111,12 @@ const Complaint = (props) => {
                   xs={12}
                 >
                   <TextField
+                    value={reportedProductDesc}
                     fullWidth
                     multiline
                     rows={2}
                     label="被举报方产品描述"
-                    onChange={handleChange}
+                    onChange={e => setReportedProductDesc(e.target.value)}
                     required
                     variant="outlined"
                   />
@@ -110,13 +143,14 @@ const Complaint = (props) => {
                   <CacheConsumer>
                     {
                       data => {
+                        setInformer(data.userName)
+                        setToken(data.token)
                         return <TextField
                           disabled
                           fullWidth
                           label="举报人"
-                          onChange={handleChange}
                           required
-                          value={data.userName}
+                          value={informer}
                           variant="outlined"
                         />
                       }
@@ -128,9 +162,10 @@ const Complaint = (props) => {
                   xs={6}
                 >
                   <TextField
+                    value={informerContact}
                     fullWidth
                     label="联系方式"
-                    onChange={handleChange}
+                    onChange={e => setInformerContact(e.target.value)}
                     required
                     variant="outlined"
                   />
@@ -139,7 +174,7 @@ const Complaint = (props) => {
             </CardContent>
           </Card>
           <div style={{ textAlign: 'center', paddingTop: 28 }}>
-            <Button variant="contained" color="primary">提交举报信息</Button>
+            <Button onClick={handleSubmit} variant="contained" color="primary">提交举报信息</Button>
           </div>
         </div>
       </div>
