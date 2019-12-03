@@ -10,28 +10,17 @@ const errorStyle = {
   transform: 'translate(-50%, -60%)'
 }
 
-const normalStyle = {
-  backgroundColor: '#0060ba',
-  color: 'white',
-  padding: '6px 12px',
-  transform: 'translate(-50%, -60%)'
-}
-
 const error = (errorMsg) => {
-  let notification = null
-  Notification.newInstance({}, (n) => notification = n)
-  notification.notice({
-    content: errorMsg,
-    style: errorStyle
+  Notification.notice({
+    message: errorMsg,
+    variant: 'error'
   })
 }
 
 const notice = (message) => {
-  let notification = null
-  Notification.newInstance({}, (n) => notification = n)
-  notification.notice({
-    content: message,
-    style: normalStyle
+  Notification.notice({
+    message: message,
+    variant: 'success'
   })
 }
 

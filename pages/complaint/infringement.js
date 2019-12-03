@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import Layout from '../../components/layout'
 import Navigator from '../../components/navigator'
 import Card from '@material-ui/core/Card'
@@ -17,8 +17,44 @@ import { CacheConsumer } from '../../components/providers'
 import Button from '@material-ui/core/Button'
 
 const Complaint = (props) => {
-  const handleChange = () => {
-
+  const [informer, setInformer] = useState('')
+  const [token, setToken] = useState('')
+  const [patentType, setPatentType] = useState(1)
+  const [investigatorPatentNumber, setInvestigatorPatentNumber] = useState('')
+  const [investigatorProductName, setInvestigatorProductName] = useState('')
+  const [investigatorProductDesc, setInvestigatorProductDesc] = useState('')
+  const [investigatorImagePath, setInvestigatorImagePath] = useState('')
+  const [reportedPatentNumber, setReportedPatentNumber] = useState('')
+  const [reportedProductName, setReportedProductName] = useState('')
+  const [reportedProductDesc, setReportedProductDesc] = useState('')
+  const [informerContact, setInformerContact] = useState('')
+  const [reportedImagePath, setReportedImagePath] = useState('')
+  const handleSubmit = async () => {
+    const params = {
+      investigatorPatentNumber: '',
+      investigatorProductName: '',
+      investigatorProductDesc: '',
+      investigatorImagePath: '',
+      complaintType: 2,
+      patentType,
+      reportedPatentNumber,
+      reportedProductName,
+      reportedProductDesc,
+      informer,
+      reportedImagePath,
+      informerContact,
+      token
+    }
+    const res = await fetch(`http://47.96.129.81:8081/f/v1/rightsProtection?${querystring.stringify(params)}`, {
+      method: 'post'
+    })
+    const result = await res.json()
+    if (result.code === 0) {
+      Notification.notice({
+        variant: 'success',
+        message: '提交成功'
+      })
+    }
   }
   return (
     <Layout activeIndex={7}>
@@ -36,13 +72,13 @@ const Complaint = (props) => {
               >
                 <Grid
                   item
-                  xs={6}
+                  xs={4}
                 >
                   <FormControl fullWidth variant="outlined">
                     <InputLabel style={{ display: 'inline-block', padding: '0 6px', background: '#fff' }}>
                       投诉类型 *
                     </InputLabel>
-                    <Select fullWidth>
+                    <Select onChange={e => setPatentType(e.target.value)} fullWidth>
                       <MenuItem value={1}>发明专利</MenuItem>
                       <MenuItem value={2}>实用新型</MenuItem>
                       <MenuItem value={3}>外观设计</MenuItem>
@@ -52,13 +88,39 @@ const Complaint = (props) => {
                 </Grid>
                 <Grid
                   item
-                  xs={6}
+                  xs={4}
                 >
                   <TextField
                     fullWidth
                     helperText="请输入我方的专利号"
                     label="专利号"
-                    onChange={handleChange}
+                    onChange={e => setInvestigatorPatentNumber(e.target.value)}
+                    required
+                    variant="outlined"
+                  />
+                </Grid>
+                <Grid
+                  item
+                  xs={4}
+                >
+                  <TextField
+                    fullWidth
+                    label="相关专利名称"
+                    onChange={e => setInvestigatorProductName(e.target.value)}
+                    required
+                    variant="outlined"
+                  />
+                </Grid>
+                <Grid
+                  item
+                  xs={12}
+                >
+                  <TextField
+                    fullWidth
+                    multiline
+                    rows={2}
+                    label="产品描述"
+                    onChange={e => setInvestigatorProductDesc(e.target.value)}
                     required
                     variant="outlined"
                   />
@@ -66,7 +128,9 @@ const Complaint = (props) => {
                 <Grid
                   item
                   xs={12}>
-                  <FilesDropzone title="上传我方图片" />
+                  <FilesDropzone onUpload={val => {
+                    setInvestigatorImagePath(val && val.join(','))
+                  }} title="上传我方图片" />
                 </Grid>
               </Grid>
             </CardContent>
@@ -85,7 +149,7 @@ const Complaint = (props) => {
                   <TextField
                     fullWidth
                     label="被举报专利号"
-                    onChange={handleChange}
+                    onChange={e => setReportedPatentNumber(e.target.value)}
                     required
                     variant="outlined"
                   />
@@ -97,7 +161,7 @@ const Complaint = (props) => {
                   <TextField
                     fullWidth
                     label="被举报方产品名称"
-                    onChange={handleChange}
+                    onChange={e => setReportedProductName(e.target.value)}
                     required
                     variant="outlined"
                   />
@@ -111,7 +175,7 @@ const Complaint = (props) => {
                     multiline
                     rows={2}
                     label="被举报方产品描述"
-                    onChange={handleChange}
+                    onChange={e => setReportedProductDesc(e.target.value)}
                     required
                     variant="outlined"
                   />
@@ -119,7 +183,9 @@ const Complaint = (props) => {
                 <Grid
                   item
                   xs={12}>
-                  <FilesDropzone title="上传被举报方图片" />
+                  <FilesDropzone onUpload={val => {
+                    setReportedImagePath(val && val.join(','))
+                  }} title="上传被举报方图片" />
                 </Grid>
               </Grid>
             </CardContent>
@@ -138,11 +204,12 @@ const Complaint = (props) => {
                   <CacheConsumer>
                     {
                       data => {
+                        setInformer(data.userName)
+                        setToken(data.token)
                         return <TextField
                           disabled
                           fullWidth
                           label="举报人"
-                          onChange={handleChange}
                           required
                           value={data.userName}
                           variant="outlined"
@@ -158,7 +225,7 @@ const Complaint = (props) => {
                   <TextField
                     fullWidth
                     label="联系方式"
-                    onChange={handleChange}
+                    onChange={e => setInformerContact(e.target.value)}
                     required
                     variant="outlined"
                   />
@@ -167,7 +234,7 @@ const Complaint = (props) => {
             </CardContent>
           </Card>
           <div style={{ textAlign: 'center', paddingTop: 28 }}>
-            <Button variant="contained" color="primary">提交举报信息</Button>
+            <Button onClick={handleSubmit} variant="contained" color="primary">提交举报信息</Button>
           </div>
         </div>
       </div>

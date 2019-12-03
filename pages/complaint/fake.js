@@ -17,6 +17,7 @@ import Select from '@material-ui/core/Select'
 import MenuItem from '@material-ui/core/MenuItem'
 import fetch from 'isomorphic-unfetch'
 import querystring from 'query-string'
+import Notification from '../../components/notification'
 
 const Complaint = (props) => {
   const [informer, setInformer] = useState('')
@@ -26,6 +27,7 @@ const Complaint = (props) => {
   const [reportedProductName, setReportedProductName] = useState('')
   const [reportedProductDesc, setReportedProductDesc] = useState('')
   const [informerContact, setInformerContact] = useState('')
+  const [reportedImagePath, setReportedImagePath] = useState('')
   const handleSubmit = async () => {
     const params = {
       investigatorPatentNumber: '',
@@ -38,7 +40,7 @@ const Complaint = (props) => {
       reportedProductName,
       reportedProductDesc,
       informer,
-      reportedImagePath: '',
+      reportedImagePath,
       informerContact,
       token
     }
@@ -47,7 +49,10 @@ const Complaint = (props) => {
     })
     const result = await res.json()
     if (result.code === 0) {
-
+      Notification.notice({
+        variant: 'success',
+        message: '提交成功'
+      })
     }
   }
   return (
@@ -124,7 +129,9 @@ const Complaint = (props) => {
                 <Grid
                   item
                   xs={12}>
-                  <FilesDropzone title="上传被举报方图片" />
+                  <FilesDropzone onUpload={val => {
+                    setReportedImagePath(val && val.join(','))
+                  }} title="上传被举报方图片" />
                 </Grid>
               </Grid>
             </CardContent>

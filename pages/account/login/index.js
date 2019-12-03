@@ -11,14 +11,7 @@ class Login extends React.Component {
   }
   handleSubmit = async e => {
     e.preventDefault()
-    let notification = null
-    const noticeStyle = {
-      backgroundColor: '#F4606C',
-      color: 'white',
-      transform: 'translate(-50%, -60%)'
-    }
     const { account, password, rememberme } = this.state
-    Notification.newInstance({}, (n) => notification = n)
     try {
       const fetcha = await fetch(`http://47.96.129.81:8081/f/v1/login?account=${account}&password=${password}`, {
         method: 'POST',
@@ -32,15 +25,15 @@ class Login extends React.Component {
         location.href = `/account/login/redirect?token=${json.token}&username=${json.body.username}&authtype=${json.body.type}&rememberme=${rememberme ? 1 : 0}`
         return
       }
-      notification.notice({
-        content: '用户名或密码错误，请重新登录',
-        style: noticeStyle
+      Notification.notice({
+        message: '用户名或密码错误，请重新登录',
+        variant: 'error'
       })
     } catch (exception) {
       console.log(exception)
-      notification.notice({
-        content: '网络异常，请重试',
-        style: noticeStyle
+      Notification.notice({
+        message: '网络异常，请重试',
+        variant: 'error'
       })
     }
   }

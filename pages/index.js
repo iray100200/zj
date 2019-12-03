@@ -11,7 +11,8 @@ const Home = (props = {
   notice: [],
   experts: [],
   deploy: [],
-  dynamics: []
+  dynamics: [],
+  newsPics: []
 }) => {
   return (
     <Layout activeIndex={0}>
@@ -25,24 +26,16 @@ const Home = (props = {
             <div className="itemCon indexNews clearfix">
               <div className="focus fl">
                 <ul>
-                  <li>
-                    <img src="/client/images/focus1.jpg" />
-                    <div className="focusText">
-                      <a href="#">2017年上海市无线电测向锦标赛在我校举办1</a>
-                    </div>
-                  </li>
-                  <li>
-                    <img src="/client/images/focus1.jpg" />
-                    <div className="focusText">
-                      <a href="#">2017年上海市无线电测向锦标赛在我校举办2</a>
-                    </div>
-                  </li>
-                  <li>
-                    <img src="/client/images/focus1.jpg" />
-                    <div className="focusText">
-                      <a href="#">2017年上海市无线电测向锦标赛在我校举办3</a>
-                    </div>
-                  </li>
+                  {
+                    props.newsPics.map(obj => {
+                      return <li>
+                        <img src={obj.imgpath} />
+                        <div className="focusText">
+                          <a target="_blank" href={obj.link}>{obj.title}</a>
+                        </div>
+                      </li>
+                    })
+                  }
                 </ul>
                 <div className="dots"></div>
               </div>
@@ -157,7 +150,7 @@ const Home = (props = {
             </div>
             <div className="itemCon guide">
               <ul className="listStyle">
-              {
+                {
                   props.dynamics.map(obj => {
                     return <li className="clearfix">
                       <a href={obj.link}>{obj.title}</a>
@@ -179,6 +172,9 @@ Home.getInitialProps = async ({ req }) => {
   // news
   const res_news = await fetch(`http://47.96.129.81:8081/f/v1/news?pageNum=1&pageSize=7`)
   const result_news = await res_news.json()
+  // new-with-picture
+  const res_news_p = await fetch(`http://47.96.129.81:8081/f/v1/news?pageNum=1&pageSize=5&hasPicture=1`)
+  const result_news_p = await res_news_p.json()
   // notice
   const res_notice = await fetch(`http://47.96.129.81:8081/f/v1/notices?pageNum=1&pageSize=7`)
   const result_notice = await res_notice.json()
@@ -194,6 +190,7 @@ Home.getInitialProps = async ({ req }) => {
   // result
   return {
     news: _.get(result_news, 'body.list', []),
+    newsPics: _.get(result_news_p, 'body.list', []),
     notice: _.get(result_notice, 'body.list', []),
     experts: _.get(result_experts, 'body.list', []),
     deploy: _.get(result_deploy, 'body.list', []),

@@ -19,7 +19,7 @@ import FileCopyIcon from '@material-ui/icons/FileCopy'
 import bytesToSize from './bytesToSize'
 import fetch from 'isomorphic-unfetch'
 
-const useStyles = makeStyles(theme => ({
+const useStyles = uploaded => makeStyles(theme => ({
   root: {},
   dropZone: {
     borderRadius: 4,
@@ -32,7 +32,7 @@ const useStyles = makeStyles(theme => ({
     alignItems: 'center',
     '&:hover': {
       backgroundColor: colors.grey[50],
-      opacity: 0.5,
+      opacity: uploaded ? 1 : 0.5,
       cursor: 'pointer'
     }
   },
@@ -61,17 +61,16 @@ const useStyles = makeStyles(theme => ({
 
 const FilesDropzone = props => {
   const { className, title, ...rest } = props
-  const classes = useStyles()
-
   const [files, setFiles] = useState([])
-
+  const [uploaded, setUploaded] = useState(false)
+  const classes = useStyles(uploaded)()
   const handleDrop = useCallback(acceptedFiles => {
     setFiles(files => [...files].concat(acceptedFiles))
   }, [])
 
   const handleRemoveAll = () => {
-    savedFiles.length = 0
     setFiles([])
+    setUploaded(false)
   }
 
   const upload = (data) => {
@@ -86,18 +85,19 @@ const FilesDropzone = props => {
   })
 
   const handleUpload = () => {
-    const filePaths = []
-    files.forEach((file) => {
-      const reader = new FileReader()
-      reader.onload = async () => {
-        const formData = new FormData()
-        const binary = new Blob([reader.result])
-        formData.append('file', binary)
-        const res = await upload(formData)
-        const result = await res.json()
-        filePaths.push(result.body)
+    const { onUpload = e => e } = props
+    if (files.length < 1) return
+    Promise.all(files.map(async (file) => {
+      const formData = new FormData()
+      formData.set('file', file)
+      const res = await upload(formData)
+      const result = await res.json()
+      if (result.code === 0) {
+        return result.body
       }
-      reader.readAsArrayBuffer(file)
+    })).then(result => {
+      onUpload(result)
+      setUploaded(true)
     })
   }
 
@@ -113,27 +113,31 @@ const FilesDropzone = props => {
         })}
         {...getRootProps()}
       >
-        <input {...getInputProps()} accept="image/gif,image/jpeg,image/jpg,image/png,image/svg" />
+        <input {...getInputProps()} disabled={uploaded} accept="image/gif,image/jpeg,image/jpg,image/png,image/svg" />
         <div>
           <img
             alt="选择文件"
             className={classes.image}
-            src="/client/images/undraw_add_file2_gvbb.svg"
+            src={uploaded ? "/client/images/undraw_resume_folder_2_arse.svg" : "/client/images/undraw_add_file2_gvbb.svg"}
           />
         </div>
-        <div>
+        <div style={{ marginLeft: 8 }}>
           <Typography
             gutterBottom
             variant="h3"
           >
-            {title}
+            {uploaded ? '文件已上传' : title}
           </Typography>
           <Typography
             className={classes.info}
             color="textSecondary"
             variant="body1"
           >
-            将文件拖拽至此处或点击 <Link underline="always">浏览文件</Link>{' '}
+            {
+              uploaded ? null : <span>
+                将文件拖拽至此处或点击 <Link underline="always">浏览文件</Link>{' '}
+              </span>
+            }
           </Typography>
         </div>
       </div>
@@ -164,15 +168,25 @@ const FilesDropzone = props => {
               onClick={handleRemoveAll}
               size="small"
             >
-              全部移除
+              {
+                uploaded ? '重新选择文件上传' : '全部移除'
+              }
             </Button>
-            <Button
-              onClick={handleUpload}
-              variant="outlined"
-              color="primary"
-              size="small">
-              上传
+            {
+              uploaded ? <Button
+                variant="outlined"
+                color="primary"
+                disabled
+                size="small">
+                已上传
+              </Button> : <Button
+                  onClick={handleUpload}
+                  variant="outlined"
+                  color="primary"
+                  size="small">
+                  上传
             </Button>
+            }
           </div>
         </Fragment>
       )}

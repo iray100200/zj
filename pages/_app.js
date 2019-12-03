@@ -5,6 +5,7 @@ import { ThemeProvider } from '@material-ui/core/styles'
 import theme from '../components/theme'
 import { CacheProvider } from '../components/providers'
 import cookie from 'cookie'
+import Notification from '../components/notification'
 
 export default class MyApp extends App {
   componentDidMount() {
@@ -26,6 +27,7 @@ export default class MyApp extends App {
         <ThemeProvider theme={theme}>
           <CacheProvider value={cookieData}>
             <Component {...pageProps} />
+            <Notification />
           </CacheProvider>
         </ThemeProvider>
       </React.Fragment>
