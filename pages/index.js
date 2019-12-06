@@ -135,7 +135,7 @@ const Home = (props = {
                 {
                   props.deploy.map(obj => {
                     return <li className="clearfix">
-                      <a href={obj.link}>{obj.title}</a>
+                      <a target="_blank" href={`/work/deploy/${obj.id}`}>{obj.title}</a>
                       {/* <span>{moment(obj.releaseTime).format('MM-DD')}</span> */}
                     </li>
                   })
@@ -153,7 +153,7 @@ const Home = (props = {
                 {
                   props.dynamics.map(obj => {
                     return <li className="clearfix">
-                      <a href={obj.link}>{obj.title}</a>
+                      <a target="_blank" href={`/work/dynamics/${obj.id}`}>{obj.title}</a>
                       {/* <span>{moment(obj.releaseTime).format('MM-DD')}</span> */}
                     </li>
                   })

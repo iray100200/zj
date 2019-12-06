@@ -1,7 +1,7 @@
 import React from 'react'
-import Navigator from '../../components/navigator'
-import Pagination from '../../components/pagination'
-import Layout from '../../components/layout'
+import Navigator from '../../../components/navigator'
+import Pagination from '../../../components/pagination'
+import Layout from '../../../components/layout'
 import url from 'url'
 import querystring from 'querystring'
 import fetch from 'isomorphic-unfetch'
@@ -33,7 +33,7 @@ const Home = ({ query, data = {
             {
               data.body.list && data.body.list.map((obj, index) => {
                 return <li key={index} className="clearfix">
-                  <a href={obj.link} target="_blank">{obj.title}</a>
+                  <a href={`/work/dynamics/${obj.id}`} target="_blank">{obj.title}</a>
                   <span>{obj.releaseTime && moment(obj.releaseTime).format('YYYY-MM-DD')}</span>
                 </li>
               })
