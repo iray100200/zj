@@ -2,10 +2,10 @@ const express = require('express')
 const bodyParser = require('body-parser')
 const session = require('express-session')
 const cookie = require('cookie')
-const dev = process.env.NODE_ENV !== 'production'
 const next = require('next')
-const app = next({ dev })
+const app = next({ })
 const handle = app.getRequestHandler()
+const port = parseInt(process.env.PORT, 10) || 9001
 
 app.prepare().then(() => {
   const server = express()
@@ -31,8 +31,8 @@ app.prepare().then(() => {
     return handle(req, res)
   })
 
-  server.listen(9001, (err) => {
+  server.listen(port, (err) => {
     if (err) throw err
-    console.log('Server ready on http://localhost:9001')
+    console.log(`Server ready on http://localhost:${port}`)
   })
 })
