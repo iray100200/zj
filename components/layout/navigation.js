@@ -1,6 +1,6 @@
 import React from 'react'
 import { FaNewspaper, FaHome, FaBullhorn, FaUserMd, FaPhoneSquare } from "react-icons/fa";
-import { MdArrowDropDown } from 'react-icons/md'
+import { MdArrowDropDown, MdDashboard, MdAddAlert, MdBuild } from 'react-icons/md'
 import { CacheConsumer } from '../providers'
 
 const navs = (userType) => [
@@ -8,27 +8,28 @@ const navs = (userType) => [
     text: '首页',
     link: '/',
     key: 0,
-    icon: <FaHome size={20} />
+    icon: <FaHome size={18} />
   }, {
     key: 8,
     text: '后台管理',
     link: '/admin',
     hidden: userType !== 'admin',
+    icon: <MdDashboard size={18} />
   }, {
     text: '新闻中心',
     link: '/news',
     key: 1,
-    icon: <FaNewspaper size={20} />
+    icon: <FaNewspaper size={18} />
   }, {
     text: '专家栏目',
     link: '/experts',
     key: 2,
-    icon: <FaUserMd size={20} />
+    icon: <FaUserMd size={18} />
   }, {
     text: '通知公告',
     link: '/notice',
     key: 3,
-    icon: <FaBullhorn size={20} />
+    icon: <MdAddAlert size={18} />
   }, {
     key: 4,
     text: '工作部署',
@@ -60,7 +61,7 @@ const navs = (userType) => [
     key: 6,
     text: '联系我们',
     link: '/contactus',
-    icon: <FaPhoneSquare size={20} />
+    icon: <FaPhoneSquare size={18} />
   }
 ]
 
@@ -75,10 +76,11 @@ export default {
               data => {
                 return navs(data.authtype, data.token).filter(obj => !obj.hidden).map((obj) => {
                   return <li key={obj.key} className={obj.key == activeIndex ? 'first active' : ''}>
-                    <a href={obj.link} style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }} className="navItem">
-                      {obj.icon}&nbsp;&nbsp;{obj.text}
+                    <a href={obj.link} style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', overflow: 'hidden', height: 50 }} className="navItem">
+                      {obj.icon}
+                      <label style={{ marginLeft: 4 }}>{obj.text}</label>
                       {
-                        obj.children && obj.children.length && <MdArrowDropDown style={{ marginTop: 2, marginLeft: 2 }} size={20} />
+                        obj.children && obj.children.length && <MdArrowDropDown style={{ marginTop: 2, marginLeft: 2 }} size={18} />
                       }
                     </a>
                     {
