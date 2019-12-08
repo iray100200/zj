@@ -61,7 +61,7 @@ const useStyles = makeStyles(theme => ({
 }))
 
 const ProjectCard = props => {
-  const { project, className, ...rest } = props
+  const { project = {}, className, ...rest } = props
   const classes = useStyles()
   return (
     <Card
