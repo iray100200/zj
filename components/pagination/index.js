@@ -1,8 +1,5 @@
 import React from 'react'
 import Pagination from 'rc-pagination'
-import 'rc-pagination/assets/index.css'
-
-import './style.less'
 
 export default function (props) {
   return (

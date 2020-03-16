@@ -6,7 +6,7 @@ import theme from '../components/theme'
 import { CacheProvider } from '../components/providers'
 import cookie from 'cookie'
 import Notification from '../components/notification'
-import CssBaseline from '@material-ui/core/CssBaseline'
+// import CssBaseline from '@material-ui/core/CssBaseline'
 
 export default class MyApp extends App {
   componentDidMount() {
@@ -22,7 +22,7 @@ export default class MyApp extends App {
     cookieData.userName = cookieData.username && Buffer.from(cookieData.username, 'base64').toString('utf8')
     return (
       <React.Fragment>
-        <CssBaseline />
+        {/* <CssBaseline /> */}
         <Head>
           <title>镇江市专利网站</title>
         </Head>
