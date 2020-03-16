@@ -3,7 +3,8 @@ const bodyParser = require('body-parser')
 const session = require('express-session')
 const cookie = require('cookie')
 const next = require('next')
-const app = next({ })
+const dev = process.env.NODE_DEV !== 'production'
+const app = next({ dev })
 const handle = app.getRequestHandler()
 const port = parseInt(process.env.PORT, 10) || 9001
 
