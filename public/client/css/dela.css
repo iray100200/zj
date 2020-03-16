@@ -1082,11 +1082,11 @@ body {
   transition: 0.3s;
 }
 
-input {
+.dela-presets-container-2 input {
   outline: none;
 }
 
-:-webkit-autofill {
+.dela-presets-container-2 :-webkit-autofill {
   -webkit-text-fill-color: #2d9ddd !important;
   transition: background-color 5000s ease-in-out 0s;
 }

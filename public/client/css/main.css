@@ -1087,15 +1087,11 @@ body {
   margin: 1.2em 0;
 }
 
-.MuiTable-root {
-  table-layout: fixed;
-}
-
-.MuiTable-root td, .MuiTable-root th {
-  border: 1px solid #eee;
-  text-align: center;
-}
-
 .MuiCardHeader-root {
-  background: #f0f0f1;
+  background: rgba(200, 200, 200, 0.15);
+}
+
+.Mui-search fieldset {
+  border-top-right-radius: 0!important;
+  border-bottom-right-radius: 0!important;
 }

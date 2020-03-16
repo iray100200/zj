@@ -59,7 +59,7 @@ class Login extends React.Component {
         }
       })
       const json = await fetcha.json()
-      location.href = `/login/redirect?token=${json.token}&username=${username}&authtype=user&rememberme=0`
+      location.href = `/account/login/redirect?token=${json.token}&username=${username}&authtype=user&rememberme=0`
     } catch (exception) {
       console.log(exception)
     }

@@ -2,7 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import clsx from 'clsx'
 import moment from 'moment'
-import { makeStyles } from '@material-ui/styles'
+import { makeStyles } from '@material-ui/core/styles'
 import {
   Avatar,
   Button,
@@ -73,8 +73,11 @@ const ProjectCard = props => {
           <img src={project.buy_pic} width={80} height={80} style={{ minWidth: 80, marginRight: 20 }} />
           <div>
             <strong dangerouslySetInnerHTML={{ __html: project.patent_title }}></strong>
-            <Typography style={{ marginTop: 8 }} variant="body2">
+            <Typography style={{ marginTop: 6 }} variant="body2">
               <span dangerouslySetInnerHTML={{ __html: project.buy_content }}></span>
+            </Typography>
+            <Typography style={{ marginTop: 4 }} variant="body2">
+              {project.buy_source} <b>{project.buy_price && ('￥' + project.buy_price)}</b>
             </Typography>
           </div>
         </div>
@@ -88,6 +91,9 @@ const ProjectCard = props => {
             </span>
           </Typography>
           <Typography variant="body2">{moment(project.patent_application_date).format('YYYY-MM-DD')}</Typography>
+          <Typography variant="body2">
+            疑似侵权风险：{project.result}
+          </Typography>
         </div>
         <div className={classes.stats}>
           <Typography variant="h6">{project.patent_public_number}</Typography>

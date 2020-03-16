@@ -7,7 +7,7 @@ import moment from 'moment'
 const Item = ({ headers, data }) => {
   const { title, content, createDate } = data.body || {}
   return (
-    <Layout headers={headers} activeIndex={3}>
+    <Layout headers={headers} activeIndex={4}>
       <Navigator title="工作部署" breadcrumb={[{
         text: '工作部署详情'
       }]} />
