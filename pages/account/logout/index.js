@@ -6,9 +6,9 @@ Logout.getInitialProps = ({ res }) => {
   res.writeHead(302, {
     'Location': '/',
     'Set-Cookie': [
-      `token=;path=/;max-age=0}`,
-      `username=;path=/;max-age=0}`,
-      `authtype=;path=/;max-age=0}`
+      `token=;path=/;max-age=0;httpOnly`,
+      `username=;path=/;max-age=0;httpOnly`,
+      `authtype=;path=/;max-age=0;httpOnly`
     ]
   })
   res.end()

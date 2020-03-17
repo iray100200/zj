@@ -10,7 +10,7 @@ export default function (props) {
         <link href="/client/css/main.css" rel="stylesheet" />
         <script src="https://code.jquery.com/jquery-3.4.1.min.js"
           integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo="
-          crossorigin="anonymous"></script>
+          crossOrigin="anonymous"></script>
       </Head>
       <div className="userSection" style={{ background: 'rgba(230, 230, 230, 0.7)' }}>
         <div className="wp clearfix" style={{ textAlign: 'left', lineHeight: '32px', height: 32 }}>

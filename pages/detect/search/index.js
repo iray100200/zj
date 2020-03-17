@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { Grid, Card, CardContent, Button, FormControl, MenuItem, Select, Tabs, Tab } from '@material-ui/core'
+import { Grid, Card, CardContent, Button, FormControl, MenuItem, Select, Tabs, Tab, Avatar } from '@material-ui/core'
 import Typography from '@material-ui/core/Typography';
 import TextField from '@material-ui/core/TextField';
 import { fade, makeStyles } from '@material-ui/core/styles';
@@ -10,6 +10,12 @@ import ItemCard from '../card';
 import Autocomplete from '@material-ui/lab/Autocomplete'
 import clsx from 'clsx'
 
+const apps = [
+  '/images/icon_yj_', '/images/icon_xty_', '/images/icon_zyj_', '/images/icon_whj_', '/images/icon_xyy_'
+]
+
+const apps_name = ['眼睛', '血糖仪', '制氧机', '雾化器', '血压计']
+
 const useStyles = makeStyles(theme => ({
   root: {
     padding: theme.spacing(2)
@@ -18,8 +24,7 @@ const useStyles = makeStyles(theme => ({
     marginTop: -theme.spacing(2)
   },
   results: {
-    marginTop: theme.spacing(2),
-    paddingTop: theme.spacing(4)
+    marginTop: theme.spacing(2)
   },
   paginate: {
     marginTop: theme.spacing(3),
@@ -33,6 +38,16 @@ const useStyles = makeStyles(theme => ({
     alignItems: 'center',
     height: 55,
     overflow: 'hidden'
+  },
+  apps: {
+    marginTop: theme.spacing(1),
+    marginBottom: theme.spacing(1)
+  },
+  app: {
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'center',
+    justifyContent: 'center'
   },
   searchIcon: {
     width: theme.spacing(7),
@@ -56,6 +71,7 @@ const useStyles = makeStyles(theme => ({
 }))
 
 export default (props) => {
+  const [products, setProducts] = useState([])
   const [searchType, setSearchType] = useState(1)
   const [searched, setSearched] = useState(false)
   const [keyword, setKeyword] = useState('')
@@ -72,7 +88,7 @@ export default (props) => {
     if (keyword) {
       fetchData()
     }
-  }, [patentType])
+  }, [patentType, products])
   const fetchData = async (page) => {
     page = typeof page === 'number' ? page : pageNum
     const params = querystring.stringify({
@@ -81,6 +97,7 @@ export default (props) => {
       keyword,
       searchType,
       patentType,
+      productType: products.map(i => i + 1).join(',')
     })
     const res = await fetch(`http://47.96.129.81:8081/f/v1/monitor?${params}`, {
       method: 'post'
@@ -134,6 +151,14 @@ export default (props) => {
     setSearchType(evt.target.value)
   }
   const classes = useStyles()
+  const handleSelectProduct = index => () => {
+    if (products.indexOf(index) > -1) {
+      setProducts([...products.filter(o => o !== index)])
+    } else {
+      products.push(index)
+      setProducts([...products])
+    }
+  }
   return (
     <Card style={{ boxShadow: 'none' }}>
       <CardContent className={classes.content}>
@@ -175,6 +200,21 @@ export default (props) => {
               />
               <Button onClick={handleSearch} className={classes.button}>搜索</Button>
             </div>
+          </Grid>
+          <Grid className={classes.apps} container spacing={6}>
+            {apps.map((value, index) => {
+              const state = products.indexOf(index) > -1 ? 'on' : 'off'
+              return (
+                <Grid key={value} item>
+                  <div className={classes.app}>
+                    <Avatar onClick={handleSelectProduct(index)} variant="rounded" src={value + state + '.png'} />
+                    <span>
+                      {apps_name[index]}
+                    </span>
+                  </div>
+                </Grid>
+              )
+            })}
           </Grid>
           {
             data && data.length ? <Grid item xs={12}>

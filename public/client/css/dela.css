@@ -26,6 +26,7 @@ body {
   flex-wrap: wrap;
   align-items: center;
   height: 100vh;
+  box-sizing: content-box;
 }
 
 .dela-presets-container-2 .dela-preset-container {
@@ -36,8 +37,7 @@ body {
 .dela-presets-container-2 .dela-preset-2-1 {
   border-radius: 4px;
   font-size: 16px;
-  width: 280px;
-  min-width: 11em;
+  width: 16rem;
   padding: 9.5em 3.68em 7.7em 3.68em;
   box-shadow: 0 0 1em rgba(0, 0, 0, 0.2);
   font-family: Roboto;
@@ -183,9 +183,8 @@ body {
 .dela-presets-container-2 .dela-preset-2-2 {
   position: relative;
   font-size: 16px;
-  width: 280px;
-  min-width: 11em;
-  padding: 5.6em 3.68em 6.1em 3.68em;
+  width: 16rem;
+  padding: 9.5em 3.68em 7.7em 3.68em;
   box-shadow: 0 0 1em rgba(0, 0, 0, 0.2);
   font-family: Roboto;
   background: url(/client/images/background-3-2.svg) no-repeat;
