@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useCallback } from 'react'
 import { Grid, Card, CardContent, Button, FormControl, MenuItem, Select, Tabs, Tab, Avatar } from '@material-ui/core'
 import Typography from '@material-ui/core/Typography';
 import TextField from '@material-ui/core/TextField';
@@ -70,6 +70,12 @@ const useStyles = makeStyles(theme => ({
   }
 }))
 
+const useStateWithCallback = (initilValue, callBack) => {
+  const [state, setState] = useState(initilValue);
+  useEffect(() => callBack(state), [state]);
+  return [state, setState];
+}
+
 export default (props) => {
   const [products, setProducts] = useState([])
   const [searchType, setSearchType] = useState(1)
@@ -77,22 +83,20 @@ export default (props) => {
   const [keyword, setKeyword] = useState('')
   const [total, setTotal] = useState('')
   const [data, setData] = useState([])
-  const [pageNum, setPageNum] = useState(0)
+  const [pageNum, setPageNum] = useState(null)
   const [patentType, setPatentType] = useState(0)
   const [options = [], setOptions] = useState([])
   const handlePageChange = (page) => {
     setPageNum(page.selected)
-    fetchData(page.selected)
   }
   useEffect(() => {
     if (keyword) {
       fetchData()
     }
-  }, [patentType, products])
-  const fetchData = async (page) => {
-    page = typeof page === 'number' ? page : pageNum
+  }, [patentType, products, pageNum])
+  const fetchData = async () => {
     const params = querystring.stringify({
-      pageNum: page + 1,
+      pageNum: pageNum + 1,
       pageSize: 10,
       keyword,
       searchType,
@@ -108,8 +112,8 @@ export default (props) => {
     setData(list)
     setSearched(true)
   }
-  const handleSearch = () => {
-    fetchData()
+  const handleSearch = async () => {
+    setPageNum(0)
   }
   function debounce(func, wait) {
     var timeout;
@@ -143,15 +147,16 @@ export default (props) => {
   }
   const handlePatentChange = (evt, value) => {
     setOptions([])
-    setPatentType(value, () => {
-      fetchData()
-    })
+    setPageNum(0)
+    setPatentType(value)
   }
   const handleSearchTypeChange = evt => {
+    setPageNum(0)
     setSearchType(evt.target.value)
   }
   const classes = useStyles()
   const handleSelectProduct = index => () => {
+    setPageNum(0)
     if (products.indexOf(index) > -1) {
       setProducts([...products.filter(o => o !== index)])
     } else {
@@ -236,7 +241,7 @@ export default (props) => {
                 }
               </div>
               <div className={classes.paginate}>
-                <Paginate onPageChange={handlePageChange} pageCount={Math.ceil(total / 10)} />
+                <Paginate forcePage={pageNum} onPageChange={handlePageChange} pageCount={Math.ceil(total / 10)} />
               </div>
             </Grid> : searched && <div style={{ padding: 40, textAlign: 'center' }}>
               <Typography variant="h4">抱歉，没有发现数据</Typography>
