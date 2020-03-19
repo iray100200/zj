@@ -87,16 +87,18 @@ export default (props) => {
   const [patentType, setPatentType] = useState(0)
   const [options = [], setOptions] = useState([])
   const handlePageChange = (page) => {
-    setPageNum(page.selected)
+    fetchData(page.selected)
   }
   useEffect(() => {
     if (keyword) {
       fetchData()
     }
-  }, [patentType, products, pageNum])
-  const fetchData = async () => {
+  }, [patentType, products])
+  const fetchData = async (page) => {
+    page = page || 0
+    setPageNum(page)
     const params = querystring.stringify({
-      pageNum: pageNum + 1,
+      pageNum: page + 1,
       pageSize: 10,
       keyword,
       searchType,
@@ -113,7 +115,7 @@ export default (props) => {
     setSearched(true)
   }
   const handleSearch = async () => {
-    setPageNum(0)
+    fetchData()
   }
   function debounce(func, wait) {
     var timeout;
@@ -147,16 +149,13 @@ export default (props) => {
   }
   const handlePatentChange = (evt, value) => {
     setOptions([])
-    setPageNum(0)
     setPatentType(value)
   }
   const handleSearchTypeChange = evt => {
-    setPageNum(0)
     setSearchType(evt.target.value)
   }
   const classes = useStyles()
   const handleSelectProduct = index => () => {
-    setPageNum(0)
     if (products.indexOf(index) > -1) {
       setProducts([...products.filter(o => o !== index)])
     } else {
