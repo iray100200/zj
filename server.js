@@ -28,7 +28,7 @@ app.prepare().then(() => {
     const _cookie = req.headers.cookie
     const cookieData = cookie.parse(_cookie || '')
     if (cookieData.authtype === 'admin') {
-      return express.static(path.resolve(__dirname, '../devias/build')).call(this, req, res)
+      return express.static(path.resolve(__dirname, '../zjadmin/build')).call(this, req, res)
     }
     res.writeHead(404)
     res.end()
