@@ -10,6 +10,7 @@ const port = parseInt(process.env.PORT, 10) || 9001
 const querystring = require('querystring')
 const axios = require('axios')
 const router = express.Router()
+const path = require('path')
 
 const remoteServer = 'http://47.96.129.81:8081'
 
@@ -27,7 +28,7 @@ app.prepare().then(() => {
     const _cookie = req.headers.cookie
     const cookieData = cookie.parse(_cookie || '')
     if (cookieData.authtype === 'admin') {
-      return express.static('public').call(this, req, res)
+      return express.static(path.resolve(__dirname, '../devias/build')).call(this, req, res)
     }
     res.writeHead(404)
     res.end()
