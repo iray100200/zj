@@ -6,15 +6,15 @@ import _ from 'lodash'
 
 const DynamicComponent = dynamic(() => import('./home'))
 
-const Home = (props = {
-  news: [],
-  notice: [],
-  experts: [],
-  deploy: [],
-  dynamics: [],
-  newsPics: [],
-  headers
-}) => {
+const Home = (props) => {
+  const {
+    news: [],
+    notice: [],
+    experts: [],
+    deploy: [],
+    dynamics: [],
+    newsPics: [],
+    headers } = props
   return (
     <Layout headers={headers} activeIndex={0}>
       <div>
