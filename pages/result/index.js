@@ -9,9 +9,9 @@ import moment from 'moment'
 import Compare from './Compare'
 
 const Result = (props) => {
-  const { fdata, idata } = props
+  const { fdata, idata, headers } = props
   return (
-    <Layout activeIndex={7}>
+    <Layout headers={headers} activeIndex={7}>
       <div style={{ boxShadow: 'none' }}>
         <div>
           <Card style={{ boxShadow: '0 0 1px #808080' }}>

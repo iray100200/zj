@@ -10,8 +10,8 @@ const CENTER = {
   longitude: 119.5142934176, latitude: 32.1993389757
 }
 
-const Home = ({ query }) => (
-  <Layout activeIndex={6}>
+const Home = ({ query, headers }) => (
+  <Layout headers={headers} activeIndex={6}>
     <Navigator title="联系我们" breadcrumb={[{
       text: '联系方式'
     }]} />

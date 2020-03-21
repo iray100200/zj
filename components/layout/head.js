@@ -3,6 +3,7 @@ import Head from 'next/head'
 import { CacheConsumer } from '../providers'
 
 export default function (props) {
+  console.log(props, this)
   return (
     <>
       <Head>

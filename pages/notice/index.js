@@ -8,18 +8,18 @@ import fetch from 'isomorphic-unfetch'
 import moment from 'moment'
 import { Breadcrumbs, Link, Typography } from '@material-ui/core'
 
-const Home = ({ query, data = {
+const Home = ({ query, headers, data = {
   body: {
     count: 0,
     list: []
   }
 } }) => (
-    <Layout activeIndex={3}>
+    <Layout headers={headers} activeIndex={3}>
       <Navigator title="通知公告" breadcrumb={[{
         text: '公告列表'
       }]} />
       <div className="rightCon fr">
-      <Breadcrumbs style={{ padding: 24, background: '#eee' }} aria-label="breadcrumb">
+        <Breadcrumbs style={{ padding: 24, background: '#eee' }} aria-label="breadcrumb">
           <Link color="inherit" href="/">
             首页
           </Link>

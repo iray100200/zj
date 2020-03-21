@@ -12,10 +12,11 @@ const Home = (props = {
   experts: [],
   deploy: [],
   dynamics: [],
-  newsPics: []
+  newsPics: [],
+  headers
 }) => {
   return (
-    <Layout activeIndex={0}>
+    <Layout headers={headers} activeIndex={0}>
       <div>
         <div className="container clearfix">
           <div className="item col4" style={{ height: 326 }}>

@@ -6,6 +6,7 @@ import Footer from './footer'
 
 const Layout = (props) => {
   const { activeIndex } = props
+  console.log(props)
   return (
     <div className="bodyBg">
       <Head headers={props.headers} />

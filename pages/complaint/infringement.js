@@ -57,7 +57,7 @@ const Complaint = (props) => {
     }
   }
   return (
-    <Layout activeIndex={7}>
+    <Layout headers={props.headers} activeIndex={7}>
       <Navigator title="举报检测" breadcrumb={[{
         text: '侵权投诉'
       }]} />

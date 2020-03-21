@@ -3,7 +3,7 @@ import { FaNewspaper, FaHome, FaBullhorn, FaUserMd, FaPhoneSquare } from "react-
 import { MdArrowDropDown, MdDashboard, MdAddAlert, MdBuild } from 'react-icons/md'
 import { CacheConsumer } from '../providers'
 
-const navs = (userType) => [
+const navs = (userType, token, host) => [
   {
     text: '首页',
     link: '/',
@@ -12,7 +12,7 @@ const navs = (userType) => [
   }, {
     key: 8,
     text: '后台管理',
-    link: '/admin',
+    link: `http://${host.replace(/9001/, 9002)}`,
     hidden: userType !== 'admin',
     icon: <MdDashboard size={18} />
   }, {
@@ -67,14 +67,14 @@ const navs = (userType) => [
 
 export default {
   Index: function (props) {
-    const { activeIndex = 0 } = props
+    const { activeIndex = 0, headers } = props
     return (
       <div id="nav" className="main-nav">
         <ul className="clearfix wp">
           <CacheConsumer>
             {
               data => {
-                return navs(data.authtype, data.token).filter(obj => !obj.hidden).map((obj) => {
+                return navs(data.authtype, data.token, headers.host).filter(obj => !obj.hidden).map((obj) => {
                   return <li key={obj.key} className={obj.key == activeIndex ? 'first active' : ''}>
                     <a href={obj.link} style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', overflow: 'hidden', height: 50 }} className="navItem">
                       {obj.icon}

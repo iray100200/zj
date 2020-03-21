@@ -11,7 +11,8 @@ import Autocomplete from '@material-ui/lab/Autocomplete'
 import clsx from 'clsx'
 
 const apps = [
-  '/images/icon_yj_', '/images/icon_xty_', '/images/icon_zyj_', '/images/icon_whj_', '/images/icon_xyy_'
+  '/client/images/icon_yj_', '/client/images/icon_xty_', '/client/images/icon_zyj_', 
+  '/client/images/icon_whj_', '/client/images/icon_xyy_'
 ]
 
 const apps_name = ['眼睛', '血糖仪', '制氧机', '雾化器', '血压计']

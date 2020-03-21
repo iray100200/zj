@@ -6,13 +6,13 @@ import url from 'url'
 import querystring from 'querystring'
 import { Breadcrumbs, Link, Typography } from '@material-ui/core'
 
-const Home = ({ query, data = {
+const Home = ({ query, headers, data = {
   body: {
     count: 0,
     list: []
   }
 } }) => (
-    <Layout activeIndex={2}>
+    <Layout headers={headers} activeIndex={2}>
       <Navigator title="专家栏目" breadcrumb={[{
         text: '专家列表'
       }]} />

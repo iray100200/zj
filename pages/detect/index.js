@@ -2,9 +2,9 @@ import React from 'react'
 import Layout from '../../components/layout'
 import Search from './search'
 
-const Detect = () => {
+const Detect = ({ headers }) => {
   return (
-    <Layout activeIndex={7}>
+    <Layout headers={headers} activeIndex={7}>
       <div style={{ minHeight: 500 }}>
         <Search />
       </div>
