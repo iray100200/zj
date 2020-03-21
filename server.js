@@ -19,16 +19,6 @@ app.prepare().then(() => {
     saveUninitialized: false
   }))
 
-  server.use('/admin', (req, res) => {
-    const _cookie = req.headers.cookie
-    const cookieData = cookie.parse(_cookie || '')
-    if (cookieData.authtype === 'admin') {
-      return express.static(path.resolve(__dirname, '../devias/build')).call(this, req, res)
-    }
-    res.writeHead(404)
-    res.end()
-  })
-
   server.get('/api/account', (req, res) => {
     const _cookie = req.headers.cookie
     const cookieData = cookie.parse(_cookie || '')
