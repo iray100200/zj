@@ -89,6 +89,9 @@ class Item extends React.Component {
           })
           clearInterval(this.timer1)
           clearInterval(this.timer2)
+          this.setState({
+            timestamp: 0
+          })
         }, 60000)
         this.timer2 = setInterval(() => {
           this.setState({
