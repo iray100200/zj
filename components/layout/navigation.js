@@ -50,7 +50,10 @@ const navs = (userType, token, host) => [
         text: '侵权投诉',
         link: '/complaint/infringement'
       }, {
-        text: '主动检测',
+        text: '主动检测 - 商标',
+        link: '/detect/trademark'
+      }, {
+        text: '主动检测 - 专利',
         link: '/detect'
       }, {
         text: '案件处理结果',

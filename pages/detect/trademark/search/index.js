@@ -11,11 +11,11 @@ import Autocomplete from '@material-ui/lab/Autocomplete'
 import clsx from 'clsx'
 
 const apps = [
-  '/client/images/icon_yj_', '/client/images/icon_xty_', '/client/images/icon_zyj_', 
-  '/client/images/icon_whj_', '/client/images/icon_xyy_'
+  '/client/images/icon_yj_', '/client/images/icon_xty_', '/client/images/icon_zyj_',
+  '/client/images/icon_whj_', '/client/images/icon_xyy_', '/client/images/icon_temperature_'
 ]
 
-const apps_name = ['眼镜', '血糖仪', '制氧机', '雾化器', '血压计']
+const apps_name = ['眼镜', '血糖仪', '制氧机', '雾化器', '血压计', '电子温度计']
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -78,15 +78,14 @@ const useStateWithCallback = (initilValue, callBack) => {
 }
 
 export default (props) => {
-  const [products, setProducts] = useState([])
-  const [searchType, setSearchType] = useState(1)
+  const [trademarkType, setTrademarkType] = useState([])
+  const [searchType, setSearchType] = useState("buyTypeName")
   const [searched, setSearched] = useState(false)
   const [keyword, setKeyword] = useState('')
   const [total, setTotal] = useState('')
   const [data, setData] = useState([])
   const [pageNum, setPageNum] = useState(null)
-  const [patentType, setPatentType] = useState(0)
-  const [options = [], setOptions] = useState([])
+  const [trademarkStatus, setTrademarkStatus] = useState("已注册")
   const handlePageChange = (page) => {
     fetchData(page.selected)
   }
@@ -94,23 +93,22 @@ export default (props) => {
     if (keyword) {
       fetchData()
     }
-  }, [patentType, products])
+  }, [trademarkStatus, trademarkType])
   const fetchData = async (page) => {
     page = page || 0
     setPageNum(page)
     const params = querystring.stringify({
-      pageNum: page + 1,
+      pageNo: page + 1,
       pageSize: 10,
-      keyword,
-      searchType,
-      patentType,
-      productType: products.map(i => i + 1).join(',')
+      [searchType]: keyword,
+      trademarkStatus,
+      trademarkType: trademarkType.map(i => apps_name[i]).join(',')
     })
-    const res = await fetch(`http://47.96.129.81:8081/f/v1/monitor?${params}`, {
-      method: 'post'
+    const res = await fetch(`http://47.96.129.81:8081/f/v1/suspectedTrademark?${params}`, {
+      method: 'get'
     })
     const result = await res.json()
-    const { list, totalPage: total } = result.body
+    const { list, count: total } = result.body
     setTotal(total)
     setData(list)
     setSearched(true)
@@ -130,89 +128,61 @@ export default (props) => {
   }
   const handleKeywordChange = debounce((value) => {
     setKeyword(value)
-    complete(value)
   }, 500)
-  const complete = async (keyword) => {
-    if (patentType > 0) {
-      try {
-        const res = await fetch(`http://47.96.129.81:8081/f/v1/automaticCompletion?searchType=${patentType}&keyword=${keyword}`)
-        const result = await res.json()
-        setOptions(result.body || [])
-      } catch (e) {
-        console.warn(e)
-      }
-    } else {
-      setOptions([])
-    }
-  }
-  const handleCompletionChange = value => () => {
-    setKeyword(value)
-  }
-  const handlePatentChange = (evt, value) => {
-    setOptions([])
-    setPatentType(value)
+  const handleStatusChange = (evt, value) => {
+    setTrademarkStatus(value)
   }
   const handleSearchTypeChange = evt => {
     setSearchType(evt.target.value)
   }
   const classes = useStyles()
-  const handleSelectProduct = index => () => {
-    if (products.indexOf(index) > -1) {
-      setProducts([...products.filter(o => o !== index)])
+  const handleTypeChange = index => () => {
+    if (trademarkType.indexOf(index) > -1) {
+      setTrademarkType([...trademarkType.filter(o => o !== index)])
     } else {
-      products.push(index)
-      setProducts([...products])
+      trademarkType.push(index)
+      setTrademarkType([...trademarkType])
     }
   }
   return (
     <Card style={{ boxShadow: 'none' }}>
       <CardContent className={classes.content}>
-        <Tabs value={patentType} onChange={handlePatentChange}>
-          <Tab value={0} label="全部" />
-          <Tab value={2} label="外观专利" />
-          <Tab value={4} label="实用新型" />
-          <Tab value={6} label="发明专利" />
+        <Tabs value={trademarkStatus} onChange={handleStatusChange}>
+          <Tab value="已注册" label="已注册" />
+          <Tab value="待审中" label="待审中" />
+          <Tab value="已驳回" label="已驳回" />
+          <Tab value="已审批" label="已审批" />
+          <Tab value="已销亡" label="已销亡" />
+          <Tab value="未获取" label="未获取" />
         </Tabs>
         <Grid>
           <Grid item style={{ display: 'flex', padding: 0, paddingTop: 32 }} xs={12}>
             <FormControl style={{ width: 180, marginRight: 12 }} variant="outlined">
               <Select onChange={handleSearchTypeChange} value={searchType} fullWidth>
-                <MenuItem value={1}>产品名称</MenuItem>
-                <MenuItem value={2}>专利号</MenuItem>
-                <MenuItem value={3}>专利名</MenuItem>
-                <MenuItem value={4}>申请人</MenuItem>
+                <MenuItem value={"buyTypeName"}>产品名称</MenuItem>
+                <MenuItem value={"trademarkAgency"}>代理机构</MenuItem>
+                <MenuItem value={"trademarkApplicationCnname"}>申请人</MenuItem>
               </Select>
             </FormControl>
             <div className={classes.search}>
-              <Autocomplete
-                freeSolo
-                style={{ flex: 1 }}
-                options={options}
-                renderOption={item => {
-                  return <div onClick={handleCompletionChange(item)}>{item}</div>
-                }}
-                renderInput={params => (
-                  <TextField
-                    {...params}
-                    className="Mui-search"
-                    variant="outlined"
-                    fullWidth
-                    autoFocus
-                    placeholder="输入关键字搜索"
-                    onChange={handleKeywordChange}
-                  />
-                )}
+              <TextField
+                className="Mui-search"
+                variant="outlined"
+                fullWidth
+                autoFocus
+                placeholder="输入关键字搜索"
+                onChange={handleKeywordChange}
               />
               <Button onClick={handleSearch} className={classes.button}>搜索</Button>
             </div>
           </Grid>
           <Grid className={classes.apps} container spacing={6}>
             {apps.map((value, index) => {
-              const state = products.indexOf(index) > -1 ? 'on' : 'off'
+              const state = trademarkType.indexOf(index) > -1 ? 'on' : 'off'
               return (
                 <Grid key={value} item>
                   <div className={classes.app}>
-                    <Avatar onClick={handleSelectProduct(index)} variant="rounded" src={value + state + '.png'} />
+                    <Avatar onClick={handleTypeChange(index)} variant="rounded" src={value + state + '.png'} />
                     <span>
                       {apps_name[index]}
                     </span>
