@@ -10,7 +10,8 @@ import {
   CardContent,
   Link,
   Typography,
-  colors
+  colors,
+  CardMedia
 } from '@material-ui/core'
 
 const useStyles = makeStyles(theme => ({
