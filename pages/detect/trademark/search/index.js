@@ -12,7 +12,7 @@ import clsx from 'clsx'
 
 const apps = [
   '/client/images/icon_yj_', '/client/images/icon_xty_', '/client/images/icon_zyj_',
-  '/client/images/icon_whj_', '/client/images/icon_xyy_', '/client/images/icon_temperature_'
+  '/client/images/icon_whj_', '/client/images/icon_xyy_', /*'/client/images/icon_temperature_'*/
 ]
 
 const apps_name = ['眼镜', '血糖仪', '制氧机', '雾化器', '血压计', '电子温度计']
