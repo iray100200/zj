@@ -88,7 +88,7 @@ const ProjectCard = props => {
           </Typography>
           <Typography variant="body2">
             <span title={project.patent_applicant} style={{ overflow: 'hidden', textOverflow: 'ellipsis' }}>
-              申请方：<div dangerouslySetInnerHTML={{ __html: project.patent_applicant }}></div>
+              申请人：<span dangerouslySetInnerHTML={{ __html: project.patent_applicant }}></span>
             </span>
           </Typography>
           <Typography variant="body2">{moment(project.patent_application_date).format('YYYY-MM-DD')}</Typography>
