@@ -91,7 +91,7 @@ const ProjectCard = props => {
               申请人：<span dangerouslySetInnerHTML={{ __html: project.patent_applicant }}></span>
             </span>
           </Typography>
-          <Typography variant="body2">{moment(project.patent_application_date).format('YYYY-MM-DD')}</Typography>
+          {/* <Typography variant="body2">{moment(project.patent_application_date).format('YYYY-MM-DD')}</Typography> */}
           <Typography variant="body2">
             疑似侵权风险：{project.result}
           </Typography>
@@ -99,7 +99,7 @@ const ProjectCard = props => {
         <div className={classes.stats}>
           <Typography variant="h6">{project.patent_public_number}</Typography>
           <Typography variant="body2">专利号</Typography>
-          <Typography variant="body2">{moment(project.patent_public_date).format('YYYY-MM-DD')}</Typography>
+          {/* <Typography variant="body2">{moment(project.patent_public_date).format('YYYY-MM-DD')}</Typography> */}
         </div>
         <div className={classes.actions}>
           <a target="_blank" href={project.buy_url}>
