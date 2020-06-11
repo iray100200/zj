@@ -45,7 +45,7 @@ const Home = (props) => {
                   props.news.slice(0, 1).map(obj => {
                     return (
                       <div className="headline">
-                        <h3><a href={obj.link}>{obj.title}</a></h3>
+                        <h3 title={obj.title} className="nowrap"><a href={obj.link}>{obj.title}</a></h3>
                       </div>
                     )
                   })
@@ -55,7 +55,7 @@ const Home = (props) => {
                     props.news.slice(1).map(obj => {
                       return (
                         <li className="clearfix">
-                          <a href={obj.link}>{obj.title}</a>
+                          <a title={obj.title} href={obj.link}>{obj.title}</a>
                           {/* <span>{moment(obj.releaseTime).format('MM-DD')}</span> */}
                         </li>
                       )
@@ -76,7 +76,7 @@ const Home = (props) => {
                 props.notice.slice(0, 1).map(obj => {
                   return (
                     <div className="headline">
-                      <h3><a href={`/notice/${obj.id}`}>{obj.title}</a></h3>
+                      <h3 title={obj.title}><a href={`/notice/${obj.id}`}>{obj.title}</a></h3>
                     </div>
                   )
                 })
@@ -86,7 +86,7 @@ const Home = (props) => {
                   props.notice.slice(1).map(obj => {
                     return (
                       <li className="clearfix">
-                        <a href={`/notice/${obj.id}`}>{obj.title}</a>
+                        <a title={obj.title} href={`/notice/${obj.id}`}>{obj.title}</a>
                         {/* <span>{moment(obj.releaseTime).format('MM-DD')}</span> */}
                       </li>
                     )

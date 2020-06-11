@@ -1043,6 +1043,12 @@ body {
   top: -0.5px
 }
 
+.nowrap {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
 .home-experts {
   margin: 0 -10px;
 }
