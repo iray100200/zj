@@ -33,11 +33,10 @@ const Home = ({ query, headers }) => (
       </style>
       <div style={{ padding: 24 }}>
         <div className="contact-us" style={{ background: '#eee', padding: 20, textAlign: 'center' }}>
-          <h2><i><MdLocationOn /></i>地址：江苏镇江京口区学府路301号江苏大学</h2>
-          <h2><i><MdPermPhoneMsg /></i>电话：<a href="tel:025-8888888">025-8888888</a></h2>
-          <h2><i><MdCode /></i>邮编：888888</h2>
-          <h2><i><MdEmail /></i>邮箱：<a href="email:example@126.com">example@126.com</a></h2>
-          <h2><i><MdPrint /></i>传真：88888888</h2>
+          <h2><i><MdLocationOn /></i>地址：江苏镇江京口区学府路301号</h2>
+          <h2><i><MdPermPhoneMsg /></i>电话：<a href="tel:0511-88795397">0511-88795397</a></h2>
+          <h2><i><MdCode /></i>邮编：212013</h2>
+          <h2><i><MdEmail /></i>邮箱：<a href="email:zscq@ujs.edu.cn">zscq@ujs.edu.cn</a></h2>
         </div>
         <div style={{ height: 500, marginTop: 24, border: '1px solid #eee' }} >
           <Map zoom={12} center={CENTER} amapkey={'83bed190cc1c9f559b9466c396287bd6'}>
