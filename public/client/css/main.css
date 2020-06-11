@@ -1017,8 +1017,7 @@ body {
   box-shadow: 0 0 8px rgba(0, 0, 0, 0.2);
   position: relative;
   border-top: 1px solid #eee;
-  padding: 20px;
-  color: #666;
+  padding: 24px;
 }
 
 .footer .row {
@@ -1029,7 +1028,7 @@ body {
 }
 
 .footer .row:not(:last-child) {
-  margin-bottom: 12px;
+  margin-bottom: 16px;
 }
 
 .footer .row>* {

@@ -28,9 +28,14 @@ export default function (props) {
         </div>
       </div>
       <div id="hd" className="wp clearfix">
-        <a href="/" className="hdLogo fl">
-          <img src={'http://www.jscykj.cn/assets/img/logo.png'} />
-        </a>
+        <a href="/" className="hdLogo fl" style={{
+          backgroundImage: `url(/client/images/logos/logo.png)`,
+          backgroundSize: '600px 450px',
+          backgroundPosition: '-100px -140px',
+          backgroundRepeat: 'no-repeat',
+          height: 100,
+          width: '100%'
+        }} />
       </div></>
   )
 }

@@ -4,19 +4,15 @@ export default function () {
   return (
     <div className="footer">
       <div className="row">
-        <span>短信平台: 13888888888</span>
-        <span>热线电话: 025-888888</span>
-        <span>书记编辑: 88888888@qq.com</span>
-        <a href="#">网上举报快速链接</a>
-        <a href="#">登录到内网</a>
+        <span>主办单位：江苏大学知识产权学院、镇江市市场监督管理局、镇江市知识产权局、中国（镇江）知识产权维权援助中心</span>
       </div>
       <div className="row">
-        <span>举报地址: 南京市鼓楼区新模范马路111号(邮编:210000)</span>
-        <span>采访地址: 教学1楼1室</span>
+        <span>地址：江苏省镇江市学府路301号</span>
+        <span>邮编：212013</span>
       </div>
       <div className="row">
-        <span>版权所有: © 江苏大学</span>
-        <span>京公网安备 11040102700058号</span>
+        <span>电话：<a href="tel:0511-88795397">0511-88795397</a></span>
+        <span>邮箱：<a href="mailto:zscq@ujs.edu.cn">mailto:zscq@ujs.edu.cn</a></span>
       </div>
     </div>
   )
