@@ -6,7 +6,7 @@ const next = require('next')
 const dev = process.env.NODE_ENV !== 'production'
 const app = next({ dev })
 const handle = app.getRequestHandler()
-const port = parseInt(process.env.PORT, 10) || 8081
+const port = parseInt(process.env.PORT, 10) || 9001
 const path = require('path')
 
 app.prepare().then(() => {
