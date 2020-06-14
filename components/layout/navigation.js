@@ -12,7 +12,7 @@ const navs = (userType, token, host) => [
   }, {
     key: 8,
     text: '后台管理',
-    link: `http://${host.replace(/9001/, 9002)}`,
+    link: `http://${host.replace(/8081/, 9002)}`,
     hidden: userType !== 'admin',
     icon: <MdDashboard size={18} />
   }, {
