@@ -5,6 +5,6 @@ module.exports = {
     cssModules: true,
   }),
   env: {
-    APP_URL: 'http://47.96.129.81:8081'
+    APP_URL: 'http://114.215.179.120:8080/netcrawl'
   }
 }
