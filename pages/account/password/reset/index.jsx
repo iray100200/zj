@@ -55,7 +55,7 @@ class Item extends React.Component {
     if (passed) {
       try {
         const { password, mobile } = this.state
-        const res = await fetch(`http://47.96.129.81:8081/f/v1/resetpassword?mobile=${mobile}&password=${password}`, {
+        const res = await fetch(`${process.env.APP_URL}/f/v1/resetpassword?mobile=${mobile}&password=${password}`, {
           method: 'post'
         })
         const result = await res.json()

@@ -171,22 +171,22 @@ const Home = (props) => {
 
 Home.getInitialProps = async ({ req }) => {
   // news
-  const res_news = await fetch(`http://47.96.129.81:8081/f/v1/news?pageNum=1&pageSize=7`)
+  const res_news = await fetch(`${process.env.APP_URL}/f/v1/news?pageNum=1&pageSize=7`)
   const result_news = await res_news.json()
   // new-with-picture
-  const res_news_p = await fetch(`http://47.96.129.81:8081/f/v1/news?pageNum=1&pageSize=5&hasPicture=1`)
+  const res_news_p = await fetch(`${process.env.APP_URL}/f/v1/news?pageNum=1&pageSize=5&hasPicture=1`)
   const result_news_p = await res_news_p.json()
   // notice
-  const res_notice = await fetch(`http://47.96.129.81:8081/f/v1/notices?pageNum=1&pageSize=7`)
+  const res_notice = await fetch(`${process.env.APP_URL}/f/v1/notices?pageNum=1&pageSize=7`)
   const result_notice = await res_notice.json()
   // experts
-  const res_experts = await fetch(`http://47.96.129.81:8081/f/v1/experts?pageNum=1&pageSize=10`)
+  const res_experts = await fetch(`${process.env.APP_URL}/f/v1/experts?pageNum=1&pageSize=10`)
   const result_experts = await res_experts.json()
   // deploy
-  const res_deploy = await fetch(`http://47.96.129.81:8081/f/v1/workdeps?pageNum=1&pageSize=10`)
+  const res_deploy = await fetch(`${process.env.APP_URL}/f/v1/workdeps?pageNum=1&pageSize=10`)
   const result_deploy = await res_deploy.json()
   // dynamics
-  const res_dynamics = await fetch(`http://47.96.129.81:8081/f/v1/workdynamics?pageNum=1&pageSize=10`)
+  const res_dynamics = await fetch(`${process.env.APP_URL}/f/v1/workdynamics?pageNum=1&pageSize=10`)
   const result_dynamics = await res_dynamics.json()
   // result
   return {

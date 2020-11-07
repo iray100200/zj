@@ -52,7 +52,7 @@ class Login extends React.Component {
     }
     const { username, password, email, mobile } = this.state
     try {
-      const fetcha = await fetch(`http://47.96.129.81:8081/f/v1/user?username=${username}&password=${password}&zip_code=${email}&mobile=${mobile}`, {
+      const fetcha = await fetch(`${process.env.APP_URL}/f/v1/user?username=${username}&password=${password}&zip_code=${email}&mobile=${mobile}`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/x-www-form-urlencoded'
@@ -108,7 +108,7 @@ class Login extends React.Component {
       }
     }
     try {
-      const res = await fetch(`http://47.96.129.81:8081/f/v1/existMobile?mobile=${mobile}`)
+      const res = await fetch(`${process.env.APP_URL}/f/v1/existMobile?mobile=${mobile}`)
       const result = await res.json()
       console.log('mobile', result)
       if (eval(result.body)) {

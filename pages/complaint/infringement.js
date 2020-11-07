@@ -45,7 +45,7 @@ const Complaint = (props) => {
       informerContact,
       token
     }
-    const res = await fetch(`http://47.96.129.81:8081/f/v1/rightsProtection?${querystring.stringify(params)}`, {
+    const res = await fetch(`${process.env.APP_URL}/f/v1/rightsProtection?${querystring.stringify(params)}`, {
       method: 'post'
     })
     const result = await res.json()

@@ -13,7 +13,7 @@ export default async (req, res) => {
       res.end(JSON.stringify({ success: true, token: TKEN_COL_INS.get(mobile) }))
       return
     }
-    const tmp = await fetch(`http://47.96.129.81:8081/f/v1/retrievepassword?mobile=${mobile}`, {
+    const tmp = await fetch(`${process.env.APP_URL}/f/v1/retrievepassword?mobile=${mobile}`, {
       method: 'post'
     })
     const result = await tmp.json()

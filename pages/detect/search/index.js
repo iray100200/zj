@@ -106,7 +106,7 @@ export default (props) => {
       patentType,
       productType: products.map(i => i + 1).join(',')
     })
-    const res = await fetch(`http://47.96.129.81:8081/f/v1/monitor?${params}`, {
+    const res = await fetch(`${process.env.APP_URL}/f/v1/monitor?${params}`, {
       method: 'post'
     })
     const result = await res.json()
@@ -135,7 +135,7 @@ export default (props) => {
   const complete = async (keyword) => {
     if (patentType > 0) {
       try {
-        const res = await fetch(`http://47.96.129.81:8081/f/v1/automaticCompletion?searchType=${patentType}&keyword=${keyword}`)
+        const res = await fetch(`${process.env.APP_URL}/f/v1/automaticCompletion?searchType=${patentType}&keyword=${keyword}`)
         const result = await res.json()
         setOptions(result.body || [])
       } catch (e) {

@@ -130,9 +130,9 @@ Result.getInitialProps = async ({ req, query }) => {
   const cookie_ = req.headers.cookie
   const auth = cookie.parse(cookie_)
   const { token } = auth
-  const res1 = await fetch(`http://47.96.129.81:8081/f/v1/rights-protection-createDate-complaintType?token=${token}&complaintType=1&pageNum=${query.current || 1}&createDate=2019-06-04`)
+  const res1 = await fetch(`${process.env.APP_URL}/f/v1/rights-protection-createDate-complaintType?token=${token}&complaintType=1&pageNum=${query.current || 1}&createDate=2019-06-04`)
   const result1 = await res1.json()
-  const res2 = await fetch(`http://47.96.129.81:8081/f/v1/rights-protection-createDate-complaintType?token=${token}&complaintType=2&pageNum=${query.current || 1}&createDate=2019-06-04`)
+  const res2 = await fetch(`${process.env.APP_URL}/f/v1/rights-protection-createDate-complaintType?token=${token}&complaintType=2&pageNum=${query.current || 1}&createDate=2019-06-04`)
   const result2 = await res2.json()
   return { headers: req.headers, fdata: result1.body, idata: result2.body }
 }

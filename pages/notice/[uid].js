@@ -23,7 +23,7 @@ const Item = ({ headers, data }) => {
 }
 
 Item.getInitialProps = async ({ req, query }) => {
-  const res = await fetch(`http://47.96.129.81:8081/f/v1/notice/${query.uid}`)
+  const res = await fetch(`${process.env.APP_URL}/f/v1/notice/${query.uid}`)
   const result = await res.json()
   return {
     data: result, headers: req.headers

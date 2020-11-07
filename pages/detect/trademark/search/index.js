@@ -104,7 +104,7 @@ export default (props) => {
       trademarkStatus,
       trademarkType: trademarkType.map(i => apps_name[i]).join(',')
     })
-    const res = await fetch(`http://47.96.129.81:8081/f/v1/suspectedTrademark?${params}`, {
+    const res = await fetch(`${process.env.APP_URL}/f/v1/suspectedTrademark?${params}`, {
       method: 'get'
     })
     const result = await res.json()

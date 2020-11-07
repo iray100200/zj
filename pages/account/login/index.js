@@ -13,7 +13,7 @@ class Login extends React.Component {
     e.preventDefault()
     const { account, password, rememberme } = this.state
     try {
-      const fetcha = await fetch(`http://47.96.129.81:8081/f/v1/login?account=${account}&password=${password}`, {
+      const fetcha = await fetch(`${process.env.APP_URL}/f/v1/login?account=${account}&password=${password}`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/x-www-form-urlencoded'

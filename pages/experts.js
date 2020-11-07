@@ -58,7 +58,7 @@ const Home = ({ query, headers, data = {
 Home.getInitialProps = async ({ req }) => {
   const _querystring = url.parse(req.url).query
   const query = querystring.parse(_querystring)
-  const res = await fetch(`http://47.96.129.81:8081/f/v1/experts?pageNum=${query.current || 1}&pageSize=10`)
+  const res = await fetch(`${process.env.APP_URL}/f/v1/experts?pageNum=${query.current || 1}&pageSize=10`)
   const result = await res.json()
   return { query, data: result, headers: req.headers }
 }
