@@ -31,7 +31,7 @@
     "nodemon": "^2.0.1",
     "rc-form": "^2.4.11",
     "rc-notification": "^3.3.1",
-    "rc-pagination": "^1.20.11",
+    "rc-pagination": "1",
     "rc-table": "^7.0.0-alpha.20",
     "react": "16.12.0",
     "react-amap": "^1.2.8",
